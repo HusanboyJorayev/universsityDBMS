@@ -1,10 +1,12 @@
 package com.example.universsitydbms.dto;
 
+import com.example.universsitydbms.model.Students;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,6 +20,8 @@ public class TeacherDto {
     private String firstname;
     @NotBlank(message = "lastname cannot be null or empty")
     private String lastname;
+
+    private List<StudentsDto> students;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

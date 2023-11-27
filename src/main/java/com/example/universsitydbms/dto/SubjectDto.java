@@ -1,11 +1,13 @@
 package com.example.universsitydbms.dto;
 
+import com.example.universsitydbms.model.Marks;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,6 +19,8 @@ public class SubjectDto {
     private Integer id;
     @NotBlank(message = "title cannot be null or empty")
     private String title;
+
+    private List<MarksDto> marks;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

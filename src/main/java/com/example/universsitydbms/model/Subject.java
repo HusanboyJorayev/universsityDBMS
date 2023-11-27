@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,6 +18,9 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
+
+    @OneToMany(mappedBy = "subjectId",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Marks>marks;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

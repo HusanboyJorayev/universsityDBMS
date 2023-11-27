@@ -47,7 +47,7 @@ public class StudentsService implements SimpleCrud<Integer, StudentsDto> {
                 .map(students -> ResponseDto.<StudentsDto>builder()
                         .success(true)
                         .message("Ok")
-                        .data(this.studentsMapper.toDto(students))
+                        .data(this.studentsMapper.toDtoWithMArks(students))
                         .build())
                 .orElse(ResponseDto.<StudentsDto>builder()
                         .code(-1)
