@@ -16,6 +16,8 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TeacherDto {
     private Integer id;
+    private Double salary;
+
     @NotBlank(message = "firstname cannot be null or empty")
     private String firstname;
     @NotBlank(message = "lastname cannot be null or empty")

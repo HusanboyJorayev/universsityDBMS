@@ -7,6 +7,8 @@ import com.example.universsitydbms.repository.TeachersRepository;
 import com.example.universsitydbms.service.mapper.TeacherMapper;
 import com.example.universsitydbms.service.validation.TeacherValidation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -116,6 +118,22 @@ public class TeachersService implements SimpleCrud<Integer, TeacherDto> {
                 .success(true)
                 .message("Ok")
                 .data(list.stream().map(this.teacherMapper::toDto).toList())
+                .build();
+    }
+
+    public ResponseDto<Page<TeacherDto>>getByPage(Integer page,Integer size){
+
+        Page<Teachers>teachersPage=this.teachersRepository.findAllByDeletedAtIsNull(PageRequest.of(page,size));
+        if (teachersPage.isEmpty()) {
+            return ResponseDto.<Page<TeacherDto>>builder()
+                    .code(-1)
+                    .message("Teachers are not found")
+                    .build();
+        }
+        return ResponseDto.<Page<TeacherDto>>builder()
+                .success(true)
+                .message("Ok")
+                .data(teachersPage.map(this.teacherMapper::toDto))
                 .build();
     }
 }

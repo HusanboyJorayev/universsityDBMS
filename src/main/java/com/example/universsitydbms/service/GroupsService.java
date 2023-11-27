@@ -1,14 +1,14 @@
 package com.example.universsitydbms.service;
 
-import com.example.universsitydbms.dto.ErrorDto;
-import com.example.universsitydbms.dto.GroupsDto;
-import com.example.universsitydbms.dto.ResponseDto;
-import com.example.universsitydbms.dto.SimpleCrud;
+import com.example.universsitydbms.dto.*;
 import com.example.universsitydbms.model.Groups;
+import com.example.universsitydbms.model.Teachers;
 import com.example.universsitydbms.repository.GroupRepository;
 import com.example.universsitydbms.service.mapper.GroupsMapper;
 import com.example.universsitydbms.service.validation.GroupsValidation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -124,6 +124,22 @@ public class GroupsService implements SimpleCrud<Integer, GroupsDto> {
                 .success(true)
                 .message("Ok")
                 .data(list.stream().map(this.groupsMapper::toDto).toList())
+                .build();
+    }
+
+    public ResponseDto<Page<GroupsDto>> getByPage(Integer page, Integer size) {
+
+        Page<Groups> teachersPage = this.groupRepository.findAllByDeletedAtIsNull(PageRequest.of(page, size));
+        if (teachersPage.isEmpty()) {
+            return ResponseDto.<Page<GroupsDto>>builder()
+                    .code(-1)
+                    .message("Teachers are not found")
+                    .build();
+        }
+        return ResponseDto.<Page<GroupsDto>>builder()
+                .success(true)
+                .message("Ok")
+                .data(teachersPage.map(this.groupsMapper::toDto))
                 .build();
     }
 

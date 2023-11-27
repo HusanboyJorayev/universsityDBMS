@@ -3,11 +3,13 @@ package com.example.universsitydbms.controller;
 import com.example.universsitydbms.dto.ResponseDto;
 import com.example.universsitydbms.dto.SimpleCrud;
 import com.example.universsitydbms.dto.StudentsDto;
+import com.example.universsitydbms.dto.TeacherDto;
 import com.example.universsitydbms.service.StudentsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,5 +49,10 @@ public class StudentsController implements SimpleCrud<Integer, StudentsDto> {
     @GetMapping("/getAll")
     public ResponseDto<List<StudentsDto>> getAll() {
         return this.service.getAll();
+    }
+
+    @GetMapping("/getPage")
+    public ResponseDto<Page<StudentsDto>> getByPage(@RequestParam Integer page, @RequestParam Integer size) {
+        return this.service.getByPage(page, size);
     }
 }

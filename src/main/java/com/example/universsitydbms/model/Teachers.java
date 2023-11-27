@@ -20,6 +20,7 @@ public class Teachers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Double salary;
     private String firstname;
     private String lastname;
 

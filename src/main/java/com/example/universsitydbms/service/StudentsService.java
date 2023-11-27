@@ -3,10 +3,13 @@ package com.example.universsitydbms.service;
 import com.example.universsitydbms.dto.*;
 import com.example.universsitydbms.model.Groups;
 import com.example.universsitydbms.model.Students;
+import com.example.universsitydbms.model.Teachers;
 import com.example.universsitydbms.repository.StudentsRepository;
 import com.example.universsitydbms.service.mapper.StudentsMapper;
 import com.example.universsitydbms.service.validation.StudentsValidation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -115,6 +118,22 @@ public class StudentsService implements SimpleCrud<Integer, StudentsDto> {
                 .success(true)
                 .message("Ok")
                 .data(list.stream().map(this.studentsMapper::toDto).toList())
+                .build();
+    }
+
+    public ResponseDto<Page<StudentsDto>>getByPage(Integer page, Integer size){
+
+        Page<Students>teachersPage=this.studentsRepository.findAllByDeletedAtIsNull(PageRequest.of(page,size));
+        if (teachersPage.isEmpty()) {
+            return ResponseDto.<Page<StudentsDto>>builder()
+                    .code(-1)
+                    .message("Teachers are not found")
+                    .build();
+        }
+        return ResponseDto.<Page<StudentsDto>>builder()
+                .success(true)
+                .message("Ok")
+                .data(teachersPage.map(this.studentsMapper::toDto))
                 .build();
     }
 }

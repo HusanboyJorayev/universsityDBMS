@@ -3,10 +3,12 @@ package com.example.universsitydbms.controller;
 import com.example.universsitydbms.dto.GroupsDto;
 import com.example.universsitydbms.dto.ResponseDto;
 import com.example.universsitydbms.dto.SimpleCrud;
+import com.example.universsitydbms.dto.TeacherDto;
 import com.example.universsitydbms.service.GroupsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,5 +48,10 @@ public class GroupsController implements SimpleCrud<Integer, GroupsDto> {
     @GetMapping("/getAll")
     public ResponseDto<List<GroupsDto>> getAll() {
         return this.groupsService.getAll();
+    }
+
+    @GetMapping("/getPage")
+    public ResponseDto<Page<GroupsDto>> getByPage(@RequestParam Integer page, @RequestParam Integer size) {
+        return this.groupsService.getByPage(page, size);
     }
 }
